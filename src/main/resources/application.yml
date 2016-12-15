@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: name
+    description: description
+---
+info:
+  version: @version@
+  responsible: Anatoly Cherkasov
+  stage: dev
+---
+endpoints:
+  health:
+    sensitive: false
+---
+server:
+  port: @server.port@
+---
+proxy-test-mpi:
+  callbackUrl: http://127.0.0.1:8018
+---
+fixture:
+  cards: classpath:fixture/cards.csv

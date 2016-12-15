@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Acs form</title>
+</head>
+
+<body>
+
+<form action="#" th:action="${action}" method="post">
+    <p th:text="'Маскированная карта: ' + ${pan} "></p>
+    <input type="hidden" name="PaRes" th:value="${PaRes}" />
+    <input type="hidden" name="MD" th:value="${MD}" />
+    Введите код SMS: <input type='text' name='' value='' /> <br />
+    <input type='submit' value='Подтвердить'/>
+</form>
+
+</body>
+</html>
