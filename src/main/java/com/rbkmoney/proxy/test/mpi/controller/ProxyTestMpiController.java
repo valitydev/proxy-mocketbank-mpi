@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rbkmoney.proxy.test.mpi.model.Card;
 import com.rbkmoney.proxy.test.mpi.utils.CardUtils;
 import com.rbkmoney.proxy.test.mpi.utils.MpiAction;
+import com.rbkmoney.proxy.test.mpi.utils.MpiUtils;
 import com.rbkmoney.proxy.test.mpi.utils.constant.MpiCavvAlgorithm;
 import com.rbkmoney.proxy.test.mpi.utils.constant.MpiEnrollmentStatus;
 import com.rbkmoney.proxy.test.mpi.utils.constant.MpiTransactionStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,8 @@ import java.util.*;
 @RestController
 @RequestMapping(value = "/mpi")
 public class ProxyTestMpiController {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ProxyTestMpiController.class);
 
     public final static String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
@@ -46,6 +51,9 @@ public class ProxyTestMpiController {
             @RequestParam(value = "year", required = true) String year,
             @RequestParam(value = "month", required = true) String month
     ) throws IOException {
+        LOGGER.info("VerifyEnrollment input params: pan {}, year {}, month {}",
+                MpiUtils.maskNumber(pan), year, month
+        );
 
         CardUtils cardUtils = new CardUtils(cardList);
         Optional<Card> card = cardUtils.getCardByPan(pan);
@@ -59,7 +67,10 @@ public class ProxyTestMpiController {
             map.put("acsUrl", proxyTestMpiCallbackUrl + "/mpi/acs");
         }
 
-        return new ObjectMapper().writeValueAsString(map);
+        String response = new ObjectMapper().writeValueAsString(map);
+        LOGGER.info("VerifyEnrollment response {}", response);
+
+        return response;
     }
 
     @RequestMapping(value = "validatePaRes", method = RequestMethod.POST)
@@ -67,6 +78,8 @@ public class ProxyTestMpiController {
             @RequestParam(value = "pan", required = true) String pan,
             @RequestParam(value = "paRes", required = true) String paRes
     ) throws IOException {
+
+        LOGGER.info("ValidatePaRes input params: pan {}, paRes {}", MpiUtils.maskNumber(pan), paRes);
 
         CardUtils cardUtils = new CardUtils(cardList);
         Optional<Card> card = cardUtils.getCardByPan(pan);
@@ -93,7 +106,10 @@ public class ProxyTestMpiController {
             map.put("transactionStatus", MpiTransactionStatus.AUTHENTICATION_COULD_NOT_BE_PERFORMED);
         }
 
-        return new ObjectMapper().writeValueAsString(map);
+        String response = new ObjectMapper().writeValueAsString(map);
+        LOGGER.info("ValidatePaRes response {}", response);
+
+        return response;
     }
 
     @RequestMapping(value = "acs", method = RequestMethod.POST)
@@ -102,12 +118,15 @@ public class ProxyTestMpiController {
             @RequestParam(value = "MD", required = true) String md,
             @RequestParam(value = "TermUrl", required = true) String termUrl
     ) {
+        LOGGER.info("Form ACS input params: paReq {}, MD {}, TermUrl {}", paReq, md, termUrl);
         ModelAndView model = new ModelAndView();
         model.setViewName("acs_form");
         model.addObject("action", termUrl);
         model.addObject("pan", "XXXX XXXX XXXX XXXX");
         model.addObject("PaRes", "PaRes");
         model.addObject("MD", md);
+        LOGGER.info("Form ACS show the form");
+
         return model;
     }
 
