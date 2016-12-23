@@ -1,4 +1,4 @@
-package com.rbkmoney.proxy.test.mpi.utils.constant;
+package com.rbkmoney.proxy.mocketbank.mpi.utils.constant;
 
 /**
  * 3-D Secure enrollment status

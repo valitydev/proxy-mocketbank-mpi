@@ -8,7 +8,6 @@ ENTRYPOINT ["/bin/containerpilot", "-config", "file:///etc/containerpilot.json",
 CMD ["-Xmx512m", "-jar","/opt/@artifactId@/@artifactId@.jar"]
 
 EXPOSE @server.port@
-EXPOSE 8080
 
 LABEL com.rbkmoney.@artifactId@.parent=service_java \
     com.rbkmoney.@artifactId@.parent_tag=@dockerfile.base.service.tag@ \

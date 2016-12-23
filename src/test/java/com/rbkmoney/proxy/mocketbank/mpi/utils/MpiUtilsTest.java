@@ -1,4 +1,4 @@
-package com.rbkmoney.proxy.test.mpi.utils;
+package com.rbkmoney.proxy.mocketbank.mpi.utils;
 
 import org.junit.Test;
 

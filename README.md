@@ -1,6 +1,6 @@
-# proxy-test-mpi
+# proxy-mocketbank-mpi
 
-[![Build Status](http://ci.rbkmoney.com/buildStatus/icon?job=rbkmoney_private/proxy-test-mpi/master)](http://ci.rbkmoney.com/job/rbkmoney_private/proxy-test-mpi/master)
+[![Build Status](http://ci.rbkmoney.com/buildStatus/icon?job=rbkmoney_private/proxy-mocketbank-mpi/master)](http://ci.rbkmoney.com/job/rbkmoney_private/proxy-mocketbank-mpi/master)
 
 Сервис предназначен для эмулирования работы с 3DS MPI
 
@@ -48,16 +48,16 @@ params:
 version: '2'
 services:
 
-  proxy_test_mpi:
-    image: dr.rbkmoney.com/rbkmoney/proxy-test-mpi:last
+  proxy_mocketbank_mpi:
+    image: dr.rbkmoney.com/rbkmoney/proxy-mocketbank-mpi:last
     environment:
-      - SERVICE_NAME=proxy_test_mpi
+      - SERVICE_NAME=proxy_mocketbank_mpi
     command: |
       -Xms64m -Xmx256m
-      -jar /opt/proxy-test-mpi/proxy-test-mpi.jar
-      --logging.file=/var/log/proxy-test-mpi/proxy-test-mpi.json
-      --proxy-test-mpi.callbackUrl=http://proxy-test-mpi:8080
-    working_dir: /opt/proxy-test-mpi
+      -jar /opt/proxy-mocketbank-mpi/proxy-mocketbank-mpi.jar
+      --logging.file=/var/log/proxy-mocketbank-mpi/proxy-mocketbank-mpi.json
+      --proxy-test-mpi.callbackUrl=http://proxy-mocketbank-mpi:8080
+    working_dir: /opt/proxy-mocketbank-mpi
     restart: on-failure:3
     
 networks:

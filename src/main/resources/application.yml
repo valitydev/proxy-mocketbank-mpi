@@ -15,7 +15,7 @@ endpoints:
 server:
   port: @server.port@
 ---
-proxy-test-mpi:
+proxy-mocketbank-mpi:
   callbackUrl: http://127.0.0.1:8018
 ---
 fixture:

@@ -1,6 +1,6 @@
-package com.rbkmoney.proxy.test.mpi.utils;
+package com.rbkmoney.proxy.mocketbank.mpi.utils;
 
-import com.rbkmoney.proxy.test.mpi.model.Card;
+import com.rbkmoney.proxy.mocketbank.mpi.model.Card;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

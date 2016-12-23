@@ -1,4 +1,4 @@
-package com.rbkmoney.proxy.test.mpi.model;
+package com.rbkmoney.proxy.mocketbank.mpi.model;
 
 
 public class Card {

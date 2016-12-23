@@ -1,13 +1,13 @@
-package com.rbkmoney.proxy.test.mpi.controller;
+package com.rbkmoney.proxy.mocketbank.mpi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rbkmoney.proxy.test.mpi.model.Card;
-import com.rbkmoney.proxy.test.mpi.utils.CardUtils;
-import com.rbkmoney.proxy.test.mpi.utils.MpiAction;
-import com.rbkmoney.proxy.test.mpi.utils.MpiUtils;
-import com.rbkmoney.proxy.test.mpi.utils.constant.MpiCavvAlgorithm;
-import com.rbkmoney.proxy.test.mpi.utils.constant.MpiEnrollmentStatus;
-import com.rbkmoney.proxy.test.mpi.utils.constant.MpiTransactionStatus;
+import com.rbkmoney.proxy.mocketbank.mpi.model.Card;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.CardUtils;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.MpiAction;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.MpiUtils;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiCavvAlgorithm;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiEnrollmentStatus;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiTransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,16 +26,16 @@ import java.util.*;
 
 @RestController
 @RequestMapping(value = "/mpi")
-public class ProxyTestMpiController {
+public class MpiController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ProxyTestMpiController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(MpiController.class);
 
     public final static String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
     @Value("${fixture.cards}")
     private Resource fixtureCards;
 
-    @Value("${proxy-test-mpi.callbackUrl}")
+    @Value("${proxy-mocketbank-mpi.callbackUrl}")
     private Resource proxyTestMpiCallbackUrl;
 
     List<Card> cardList;

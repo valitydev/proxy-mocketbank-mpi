@@ -1,4 +1,4 @@
-package com.rbkmoney.proxy.test.mpi.utils.constant;
+package com.rbkmoney.proxy.mocketbank.mpi.utils.constant;
 
 /**
  * Indicates the algorithm used to generate the Cardholder Authentication Verification Value.

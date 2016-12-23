@@ -1,13 +1,13 @@
-package com.rbkmoney.proxy.test.mpi;
+package com.rbkmoney.proxy.mocketbank.mpi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @ServletComponentScan
-@SpringBootApplication(scanBasePackages = {"com.rbkmoney.proxy.test.mpi"})
-public class ProxyTestMpiApplication {
+@SpringBootApplication(scanBasePackages = {"com.rbkmoney.proxy.mocketbank.mpi"})
+public class ProxyMocketBankMpiApplication {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(ProxyTestMpiApplication.class, args);
+        SpringApplication.run(ProxyMocketBankMpiApplication.class, args);
     }
 }
