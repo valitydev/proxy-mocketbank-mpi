@@ -64,7 +64,7 @@ public class MpiController {
         if (cardUtils.isEnrolled(card)) {
             map.put("enrolled", MpiEnrollmentStatus.AUTHENTICATION_AVAILABLE);
             map.put("paReq", "paReq");
-            map.put("acsUrl", proxyTestMpiCallbackUrl + "/mpi/acs");
+            map.put("acsUrl", proxyTestMpiCallbackUrl.getURI() + "/mpi/acs");
         }
 
         String response = new ObjectMapper().writeValueAsString(map);
