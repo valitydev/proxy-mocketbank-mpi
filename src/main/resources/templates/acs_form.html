@@ -1,19 +1,97 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Acs form</title>
+    <style>
+        body {
+            margin: 15px 20px;
+            font: normal 15px/18px Verdana, sans-serif;
+            position: relative;
+        }
+        form {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background: #ffffff;
+            border: 1px solid #d3d3d3;
+            border-radius: 2px;
+            overflow: scroll;
+        }
+        h1 {
+            font-size: 18px;
+            line-height: 22px;
+            margin: 0 0 20px;
+            text-align: center;
+        }
+        .info {
+            margin: 10px 0 0;
+        }
+        .row {
+            display: table;
+            width: 100%;
+        }
+        .row .left, .row .right {
+            display: table-cell;
+            width: 50%;
+            padding: 5px;
+        }
+        .row .left {
+            text-align: right;
+        }
+        .password {
+            width: 100%;
+            max-width: 120px;
+            border: 1px solid #d3d3d3;
+            font-size: 15px;
+        }
+        input[type=submit] {
+            display: block;
+            margin: 25px auto 0;
+            padding: 8px 15px;
+            background-color: #569b29;
+            border: none;
+            outline: none;
+            border-radius: 30px;
+            color: #ffffff;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
-
 <form action="#" th:action="${action}" method="post">
-    <p th:text="'Маскированная карта: ' + ${pan} "></p>
     <input type="hidden" name="PaRes" th:value="${PaRes}" />
     <input type="hidden" name="MD" th:value="${MD}" />
-    Введите код SMS: <input type='text' name='' value='' /> <br />
+    <h1>3D secure demo</h1>
+    <div class="info">
+        <div class="row">
+            <span class="left">Номер карты:</span>
+            <span class="right" th:text="${pan}">**** **** **** ****</span>
+        </div>
+        <div class="row">
+            <span class="left">Дата:</span>
+            <span class="right" id="js-date"></span>
+        </div>
+        <div class="row">
+            <span class="left">Пароль:</span>
+            <span class="right"><input class="password" type='text' value='****' /></span>
+        </div>
+    </div>
     <input type='submit' value='Подтвердить'/>
 </form>
-
 </body>
+
+<script>
+    (function () {
+        var $date = document.getElementById('js-date');
+        $date.innerHTML = String(new Date().toISOString().slice(0,10).replace(/-/g,"."));
+    }());
+</script>
 </html>
