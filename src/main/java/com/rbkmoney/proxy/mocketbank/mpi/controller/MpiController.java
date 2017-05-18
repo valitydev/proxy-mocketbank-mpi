@@ -38,7 +38,7 @@ public class MpiController {
     @Value("${proxy-mocketbank-mpi.callbackUrl}")
     private Resource proxyTestMpiCallbackUrl;
 
-    List<Card> cardList;
+    private List<Card> cardList;
 
     @PostConstruct
     public void init() throws IOException {
