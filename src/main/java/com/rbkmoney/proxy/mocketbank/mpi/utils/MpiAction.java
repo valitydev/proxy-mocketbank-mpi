@@ -10,7 +10,7 @@ public enum MpiAction {
     THREE_D_SECURE_SUCCESS("3-D Secure Success"),
     THREE_D_SECURE_FAILURE("3-D Secure Failure"),
     THREE_D_SECURE_TIMEOUT("3-D Secure Timeout"),
-    INCUFFICIENT_FUNDS("Incufficient Funds"),
+    INSUFFICIENT_FUNDS("Insufficient Funds"),
     INVALID_CARD("Invalid Card"),
     CVV_MATCH_FAIL("CVV Match Fail"),
     EXPIRED_CARD("Expired Card"),
