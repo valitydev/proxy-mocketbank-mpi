@@ -5,7 +5,7 @@ import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 
 public class MpiUtils {
 
-    public final static String MASK_CHAR = "*";
+    public static final String MASK_CHAR = "*";
 
     public static String maskNumber(final String creditCardNumber, int startLength, int endLength, String maskChar) {
         final String cardNumber = creditCardNumber.replaceAll("\\D", "");

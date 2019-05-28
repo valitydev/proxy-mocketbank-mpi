@@ -8,8 +8,7 @@ import com.rbkmoney.proxy.mocketbank.mpi.utils.MpiUtils;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiCavvAlgorithm;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiEnrollmentStatus;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiTransactionStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +23,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/mpi")
 public class MpiController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MpiController.class);
-
-    public final static String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    private static final String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
     @Value("${fixture.cards}")
     private Resource fixtureCards;
@@ -51,7 +49,7 @@ public class MpiController {
             @RequestParam(value = "year", required = true) String year,
             @RequestParam(value = "month", required = true) String month
     ) throws IOException {
-        LOGGER.info("VerifyEnrollment input params: pan {}, year {}, month {}",
+        log.info("VerifyEnrollment input params: pan {}, year {}, month {}",
                 MpiUtils.maskNumber(pan), year, month
         );
 
@@ -68,7 +66,7 @@ public class MpiController {
         }
 
         String response = new ObjectMapper().writeValueAsString(map);
-        LOGGER.info("VerifyEnrollment response {}", response);
+        log.info("VerifyEnrollment response {}", response);
 
         return response;
     }
@@ -79,7 +77,7 @@ public class MpiController {
             @RequestParam(value = "paRes", required = true) String paRes
     ) throws IOException {
 
-        LOGGER.info("ValidatePaRes input params: pan {}, paRes {}", MpiUtils.maskNumber(pan), paRes);
+        log.info("ValidatePaRes input params: pan {}, paRes {}", MpiUtils.maskNumber(pan), paRes);
 
         CardUtils cardUtils = new CardUtils(cardList);
         Optional<Card> card = cardUtils.getCardByPan(pan);
@@ -107,8 +105,7 @@ public class MpiController {
         }
 
         String response = new ObjectMapper().writeValueAsString(map);
-        LOGGER.info("ValidatePaRes response {}", response);
-
+        log.info("ValidatePaRes response {}", response);
         return response;
     }
 
@@ -118,15 +115,14 @@ public class MpiController {
             @RequestParam(value = "MD", required = true) String md,
             @RequestParam(value = "TermUrl", required = true) String termUrl
     ) {
-        LOGGER.info("Form ACS input params: paReq {}, MD {}, TermUrl {}", paReq, md, termUrl);
+        log.info("Form ACS input params: paReq {}, MD {}, TermUrl {}", paReq, md, termUrl);
         ModelAndView model = new ModelAndView();
         model.setViewName("acs_form");
         model.addObject("action", termUrl);
         model.addObject("pan", "XXXX XXXX XXXX XXXX");
         model.addObject("PaRes", "PaRes");
         model.addObject("MD", md);
-        LOGGER.info("Form ACS show the form");
-
+        log.info("Form ACS show the form");
         return model;
     }
 

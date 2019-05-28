@@ -1,8 +1,13 @@
 package com.rbkmoney.proxy.mocketbank.mpi.utils;
 
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.Arrays;
 
+@Getter
+@RequiredArgsConstructor
 public enum MpiAction {
 
     UNKNOWN("Unknown"),
@@ -17,14 +22,6 @@ public enum MpiAction {
     UNKNOWN_FAILURE("Unknown Failure");
 
     private final String action;
-
-    MpiAction(String action) {
-        this.action = action;
-    }
-
-    public String getAction() {
-        return action;
-    }
 
     public static MpiAction findByValue(String value) {
         return Arrays.stream(values()).filter((action) -> action.getAction().equals(value))
