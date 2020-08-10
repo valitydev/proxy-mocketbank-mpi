@@ -17,8 +17,9 @@ management:
 server:
   port: @server.port@
 ---
-proxy-mocketbank-mpi:
+adapter:
   callbackUrl: http://127.0.0.1:8018
+  pathAcsUrl: "/mpi/acs"
 ---
 fixture:
   cards: classpath:fixture/cards.csv

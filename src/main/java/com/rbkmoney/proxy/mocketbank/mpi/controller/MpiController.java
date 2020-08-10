@@ -1,23 +1,23 @@
 package com.rbkmoney.proxy.mocketbank.mpi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rbkmoney.proxy.mocketbank.mpi.configuration.properties.AdapterProperties;
 import com.rbkmoney.proxy.mocketbank.mpi.model.Card;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.CardUtils;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.MpiAction;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.MpiUtils;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.UrlUtils;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiCavvAlgorithm;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiEnrollmentStatus;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiTransactionStatus;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,64 +25,50 @@ import java.util.*;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/mpi")
 public class MpiController {
 
     private static final String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-    @Value("${fixture.cards}")
-    private Resource fixtureCards;
-
-    @Value("${proxy-mocketbank-mpi.callbackUrl}")
-    private Resource proxyTestMpiCallbackUrl;
-
-    private List<Card> cardList;
-
-    @PostConstruct
-    public void init() throws IOException {
-        cardList = CardUtils.getCardListFromFile(fixtureCards.getInputStream());
-    }
+    private final ObjectMapper objectMapper;
+    private final AdapterProperties properties;
+    private final List<Card> cardList;
 
     @RequestMapping(value = "verifyEnrollment", method = RequestMethod.POST)
     public String verifyEnrollment(
-            @RequestParam(value = "pan", required = true) String pan,
-            @RequestParam(value = "year", required = true) String year,
-            @RequestParam(value = "month", required = true) String month
+            @RequestParam(value = "pan") String pan,
+            @RequestParam(value = "year") String year,
+            @RequestParam(value = "month") String month
     ) throws IOException {
         log.info("VerifyEnrollment input params: pan {}, year {}, month {}",
                 MpiUtils.maskNumber(pan), year, month
         );
 
-        CardUtils cardUtils = new CardUtils(cardList);
-        Optional<Card> card = cardUtils.getCardByPan(pan);
+        Optional<Card> card = CardUtils.extractCardByPan(cardList, pan);
 
         Map<String, String> map = new HashMap<>();
-
         map.put("enrolled", MpiEnrollmentStatus.CARDHOLDER_NOT_PARTICIPATING);
-        if (cardUtils.isEnrolled(card)) {
+        if (CardUtils.isEnrolled(card)) {
             map.put("enrolled", MpiEnrollmentStatus.AUTHENTICATION_AVAILABLE);
             map.put("paReq", "paReq");
-            map.put("acsUrl", proxyTestMpiCallbackUrl.getURI() + "/mpi/acs");
+            map.put("acsUrl", UrlUtils.prepareCallbackUrl(properties.getCallbackUrl(), properties.getPathAcsUrl()));
         }
 
-        String response = new ObjectMapper().writeValueAsString(map);
+        String response = objectMapper.writeValueAsString(map);
         log.info("VerifyEnrollment response {}", response);
-
         return response;
     }
 
     @RequestMapping(value = "validatePaRes", method = RequestMethod.POST)
     public String validatePaRes(
-            @RequestParam(value = "pan", required = true) String pan,
-            @RequestParam(value = "paRes", required = true) String paRes
+            @RequestParam(value = "pan") String pan,
+            @RequestParam(value = "paRes") String paRes
     ) throws IOException {
 
         log.info("ValidatePaRes input params: pan {}, paRes {}", MpiUtils.maskNumber(pan), paRes);
-
-        CardUtils cardUtils = new CardUtils(cardList);
-        Optional<Card> card = cardUtils.getCardByPan(pan);
+        Optional<Card> card = CardUtils.extractCardByPan(cardList, pan);
         Map<String, String> map = new HashMap<>();
-
         if (card.isPresent()) {
             MpiAction action = MpiAction.findByValue(card.get().getAction());
             switch (action) {
@@ -104,16 +90,16 @@ public class MpiController {
             map.put("transactionStatus", MpiTransactionStatus.AUTHENTICATION_COULD_NOT_BE_PERFORMED);
         }
 
-        String response = new ObjectMapper().writeValueAsString(map);
+        String response = objectMapper.writeValueAsString(map);
         log.info("ValidatePaRes response {}", response);
         return response;
     }
 
     @RequestMapping(value = "acs", method = RequestMethod.POST)
     public ModelAndView formAcs(
-            @RequestParam(value = "PaReq", required = true) String paReq,
-            @RequestParam(value = "MD", required = true) String md,
-            @RequestParam(value = "TermUrl", required = true) String termUrl
+            @RequestParam(value = "PaReq") String paReq,
+            @RequestParam(value = "MD") String md,
+            @RequestParam(value = "TermUrl") String termUrl
     ) {
         log.info("Form ACS input params: paReq {}, MD {}, TermUrl {}", paReq, md, termUrl);
         ModelAndView model = new ModelAndView();

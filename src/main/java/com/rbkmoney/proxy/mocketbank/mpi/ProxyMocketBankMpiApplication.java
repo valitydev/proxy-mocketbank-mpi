@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @ServletComponentScan
-@SpringBootApplication(scanBasePackages = {"com.rbkmoney.proxy.mocketbank.mpi"})
-public class ProxyMocketBankMpiApplication {
+@SpringBootApplication
+public class ProxyMocketBankMpiApplication extends SpringApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProxyMocketBankMpiApplication.class, args);
     }

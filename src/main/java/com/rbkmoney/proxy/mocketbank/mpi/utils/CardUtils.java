@@ -2,38 +2,16 @@ package com.rbkmoney.proxy.mocketbank.mpi.utils;
 
 import com.rbkmoney.proxy.mocketbank.mpi.model.Card;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class CardUtils {
 
-    List<Card> cardList = Collections.emptyList();
-
-    public CardUtils(List<Card> cardList) {
-        this.cardList = cardList;
-    }
-
-    public static List<Card> getCardListFromFile(InputStream is) {
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        return br.lines().skip(1).map(mapToCard).collect(Collectors.toList());
-    }
-
-    private static Function<String, Card> mapToCard = (line) -> {
-        String[] p = line.split(", ");
-        return new Card(p[0], p[1], p[2]);
-    };
-
-    public Optional<Card> getCardByPan(String pan) {
+    public static Optional<Card> extractCardByPan(List<Card> cardList, String pan) {
         return cardList.stream().filter(card -> card.getPan().equals(pan)).findFirst();
     }
 
-    public boolean isEnrolled(Optional<Card> card) {
+    public static boolean isEnrolled(Optional<Card> card) {
         boolean result = false;
         if (card.isPresent()) {
             MpiAction action = MpiAction.findByValue(card.get().getAction());

@@ -1,6 +1,5 @@
 package com.rbkmoney.proxy.mocketbank.mpi.utils;
 
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +23,7 @@ public enum MpiAction {
     private final String action;
 
     public static MpiAction findByValue(String value) {
-        return Arrays.stream(values()).filter((action) -> action.getAction().equals(value))
+        return Arrays.stream(values()).filter(action -> action.getAction().equals(value))
                 .findFirst()
                 .orElse(UNKNOWN);
     }

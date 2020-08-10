@@ -2,7 +2,6 @@ package com.rbkmoney.proxy.mocketbank.mpi.utils;
 
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 
-
 public class MpiUtils {
 
     public static final String MASK_CHAR = "*";
