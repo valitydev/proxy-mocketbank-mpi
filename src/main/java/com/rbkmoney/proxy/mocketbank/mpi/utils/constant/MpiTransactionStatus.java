@@ -1,7 +1,7 @@
 package com.rbkmoney.proxy.mocketbank.mpi.utils.constant;
 
 /**
- * Transaction Status
+ * Transaction Status.
  */
 public class MpiTransactionStatus {
 

@@ -1,7 +1,7 @@
 package com.rbkmoney.proxy.mocketbank.mpi.utils.constant;
 
 /**
- * 3-D Secure enrollment status
+ * 3-D Secure enrollment status.
  */
 public class MpiEnrollmentStatus {
 
