@@ -12,6 +12,7 @@ public enum MpiAction {
     UNKNOWN("Unknown"),
     SUCCESS("Success"),
     THREE_D_SECURE_SUCCESS("3-D Secure Success"),
+    THREE_D_SECURE_2_0_SUCCESS("3-D Secure 2.0 Success"),
     THREE_D_SECURE_FAILURE("3-D Secure Failure"),
     THREE_D_SECURE_TIMEOUT("3-D Secure Timeout"),
     INSUFFICIENT_FUNDS("Insufficient Funds"),

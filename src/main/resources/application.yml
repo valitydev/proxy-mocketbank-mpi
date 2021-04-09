@@ -21,5 +21,11 @@ adapter:
   callbackUrl: http://127.0.0.1:8018
   pathAcsUrl: "/mpi/acs"
 ---
+mpi20:
+  callbackUrl: http://127.0.0.1:8018
+  pathThreeDsMethodUrl: "/mpi20/threeDsMethod"
+  pathAcsUrl: "/mpi20/acs"
+
+---
 fixture:
   cards: classpath:fixture/cards.csv

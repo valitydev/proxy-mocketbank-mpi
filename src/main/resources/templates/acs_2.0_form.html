@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Acs 2.0 form</title>
+    <link th:href="@{/css/style.css}" href="/css/style.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<form action="#" th:action="${action}" method="post">
+    <input type="hidden" name="cres" th:value="${cres}" />
+    <h1>3D 2.0 secure demo</h1>
+    <div class="info">
+        <div class="row">
+            <span class="left">Card number:</span>
+            <span class="right" th:text="${pan}">**** **** **** ****</span>
+        </div>
+        <div class="row">
+            <span class="left">Date:</span>
+            <span class="right" id="js-date"></span>
+        </div>
+        <div class="row">
+            <span class="left">Password:</span>
+            <span class="right"><input class="password" type='text' value='****' /></span>
+        </div>
+    </div>
+    <input type='submit' value='Confirm'/>
+</form>
+</body>
+
+<script type="text/javascript" charset="utf-8" th:src="@{/js/date.js}" th:inline="javascript"></script>
+
+</html>
