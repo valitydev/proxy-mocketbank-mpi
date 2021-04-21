@@ -23,7 +23,7 @@ adapter:
 ---
 mpi20:
   callbackUrl: http://127.0.0.1:8018
-  pathThreeDsMethodUrl: "/mpi20/threeDsMethod"
+  pathThreeDsMethodUrl: "/mpi20/three_ds_method"
   pathAcsUrl: "/mpi20/acs"
 
 ---
