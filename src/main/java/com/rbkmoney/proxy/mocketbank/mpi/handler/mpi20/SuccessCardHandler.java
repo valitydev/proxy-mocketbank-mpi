@@ -52,6 +52,7 @@ public class SuccessCardHandler implements CardHandler {
                 .transStatus(TransactionStatus.CHALLENGE_REQUIRED.getCode())
                 .acsUrl(mpi20Properties.getCallbackUrl() + mpi20Properties.getPathAcsUrl())
                 .creq(objectMapper.writeValueAsString(new CReq(request.getThreeDSServerTransID())))
+                .terminationUri(request.getTerminationUri())
                 .build();
     }
 
