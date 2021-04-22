@@ -6,11 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-
-import static com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiV2RequestParams.*;
 
 @Slf4j
 @RestController
@@ -48,37 +45,26 @@ public class Mpi20Controller {
     }
 
     @RequestMapping(value = "/three_ds_method", method = RequestMethod.POST)
-    public ModelAndView threeDsMethod(@RequestParam(value = THREE_DS_METHOD_DATA) String threeDSMethodData,
-                                      @RequestParam(value = TERM_URL) String termUrl,
-                                      @RequestParam(value = TERMINATION_URI) String terminationUri) {
-        log.info("Form threeDsMethod 2.0 input params: threeDSMethodData {}, termUrl {}, terminationUri {}",
-                threeDSMethodData, termUrl, terminationUri);
+    public ModelAndView threeDsMethod(@RequestParam(value = "threeDSMethodData") String threeDSMethodData,
+                                @RequestParam(value = "termUrl") String termUrl) {
+        log.info("Form threeDsMethod 2.0 input params: threeDSMethodData {}, termUrl {}", threeDSMethodData, termUrl);
         ModelAndView model = new ModelAndView();
         model.setViewName("threeDsMethod_2.0_form");
-        model.addObject(ACTION, UriComponentsBuilder.fromUriString(termUrl)
-                .queryParam(TERMINATION_URI, terminationUri)
-                .build()
-                .toUriString());
-        model.addObject(THREE_DS_METHOD_DATA, threeDSMethodData);
-        model.addObject(TERMINATION_URI, terminationUri);
+        model.addObject("action", termUrl);
+        model.addObject("threeDSMethodData", threeDSMethodData);
         log.info("Form threeDsMethod 2.0 show the form");
         return model;
     }
 
     @RequestMapping(value = "/acs", method = RequestMethod.POST)
-    public ModelAndView acs(@RequestParam(value = CREQ) String creq,
-                            @RequestParam(value = TERM_URL) String termUrl,
-                            @RequestParam(value = TERMINATION_URI) String terminationUri) {
-        log.info("Form ACS 2.0 input params: creq {}, termUrl {}, terminationUri {}", creq, termUrl, terminationUri);
+    public ModelAndView acs(@RequestParam(value = "creq") String creq,
+                            @RequestParam(value = "termUrl") String termUrl) {
+        log.info("Form ACS 2.0 input params: creq {}, termUrl {}", creq, termUrl);
         ModelAndView model = new ModelAndView();
         model.setViewName("acs_2.0_form");
-        model.addObject(ACTION, UriComponentsBuilder.fromUriString(termUrl)
-                .queryParam(TERMINATION_URI, terminationUri)
-                .build()
-                .toUriString());
-        model.addObject(PAN, "XXXX XXXX XXXX XXXX");
-        model.addObject(CREQ, creq);
-        model.addObject(TERMINATION_URI, terminationUri);
+        model.addObject("action", termUrl);
+        model.addObject("pan", "XXXX XXXX XXXX XXXX");
+        model.addObject("cres", creq);
         log.info("Form ACS 2.0 show the form");
         return model;
     }

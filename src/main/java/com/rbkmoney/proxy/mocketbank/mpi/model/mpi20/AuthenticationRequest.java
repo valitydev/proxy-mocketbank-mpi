@@ -16,6 +16,5 @@ public class AuthenticationRequest {
     private String notificationUrl;
     private String amount;
     private String currency;
-    private String terminationUri;
 
 }
