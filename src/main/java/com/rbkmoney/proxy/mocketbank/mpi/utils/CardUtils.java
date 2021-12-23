@@ -15,15 +15,10 @@ public class CardUtils {
         boolean result = false;
         if (card.isPresent()) {
             MpiAction action = MpiAction.findByValue(card.get().getAction());
-            switch (action) {
-                case THREE_D_SECURE_FAILURE:
-                case THREE_D_SECURE_TIMEOUT:
-                case THREE_D_SECURE_SUCCESS:
-                    result = true;
-                    break;
-                default:
-                    result = false;
-            }
+            result = switch (action) {
+                case THREE_D_SECURE_FAILURE, THREE_D_SECURE_TIMEOUT, THREE_D_SECURE_SUCCESS -> true;
+                default -> false;
+            };
         }
         return result;
     }

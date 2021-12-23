@@ -72,19 +72,16 @@ public class MpiController {
         if (card.isPresent()) {
             MpiAction action = MpiAction.findByValue(card.get().getAction());
             switch (action) {
-                case THREE_D_SECURE_SUCCESS:
+                case THREE_D_SECURE_SUCCESS -> {
                     map.put("transactionStatus", MpiTransactionStatus.AUTHENTICATION_SUCCESSFUL);
                     map.put("eci", "1");
                     map.put("cavv", "3");
                     map.put("cavvAlgorithm", MpiCavvAlgorithm.CVV_WITH_ATN);
                     map.put("txId", UUID.randomUUID().toString());
                     map.put("txTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATETIME_PATTERN)));
-                    break;
-                case THREE_D_SECURE_FAILURE:
-                    map.put("transactionStatus", MpiTransactionStatus.AUTHENTICATION_FAILED);
-                    break;
-                default:
-                    map.put("transactionStatus", MpiTransactionStatus.ATTEMPTS_PROCESSING_PERFORMED);
+                }
+                case THREE_D_SECURE_FAILURE -> map.put("transactionStatus", MpiTransactionStatus.AUTHENTICATION_FAILED);
+                default -> map.put("transactionStatus", MpiTransactionStatus.ATTEMPTS_PROCESSING_PERFORMED);
             }
         } else {
             map.put("transactionStatus", MpiTransactionStatus.AUTHENTICATION_COULD_NOT_BE_PERFORMED);
@@ -95,7 +92,7 @@ public class MpiController {
         return response;
     }
 
-    @RequestMapping(value = "acs", method = RequestMethod.POST)
+    @RequestMapping(value = "acs", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView formAcs(
             @RequestParam(value = "PaReq") String paReq,
             @RequestParam(value = "MD") String md,

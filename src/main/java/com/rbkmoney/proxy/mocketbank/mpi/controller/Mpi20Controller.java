@@ -56,7 +56,7 @@ public class Mpi20Controller {
         return model;
     }
 
-    @RequestMapping(value = "/acs", method = RequestMethod.POST)
+    @RequestMapping(value = "/acs", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView acs(@RequestParam(value = "creq") String creq,
                             @RequestParam(value = "TermUrl") String termUrl) {
         log.info("Form ACS 2.0 input params: creq {}, termUrl {}", creq, termUrl);
