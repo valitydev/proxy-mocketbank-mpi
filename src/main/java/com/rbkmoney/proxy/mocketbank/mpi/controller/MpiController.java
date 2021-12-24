@@ -12,6 +12,7 @@ import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiEnrollmentStatus;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.constant.MpiTransactionStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,9 @@ public class MpiController {
     private final ObjectMapper objectMapper;
     private final AdapterProperties properties;
     private final List<Card> cardList;
+
+    @Value("${static.context.root}")
+    private String staticContextRoot;
 
     @RequestMapping(value = "verifyEnrollment", method = RequestMethod.POST)
     public String verifyEnrollment(
@@ -110,6 +114,7 @@ public class MpiController {
         model.addObject("pan", "XXXX XXXX XXXX XXXX");
         model.addObject("PaRes", "PaRes");
         model.addObject("MD", md);
+        model.addObject("staticContextRoot", staticContextRoot);
         log.info("Form ACS show the form");
         return model;
     }
