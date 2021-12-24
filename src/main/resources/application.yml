@@ -42,7 +42,10 @@ mpi20:
   callbackUrl: http://127.0.0.1:8018
   pathThreeDsMethodUrl: "/mpi20/three_ds_method"
   pathAcsUrl: "/mpi20/acs"
-
+---
+static:
+  context:
+    root: /mocketbank-mpi
 ---
 fixture:
   cards: classpath:fixture/cards.csv

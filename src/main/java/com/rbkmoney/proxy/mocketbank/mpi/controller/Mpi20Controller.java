@@ -4,6 +4,7 @@ import com.rbkmoney.proxy.mocketbank.mpi.handler.mpi20.CardHandler;
 import com.rbkmoney.proxy.mocketbank.mpi.model.mpi20.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,6 +17,9 @@ import java.util.List;
 public class Mpi20Controller {
 
     private final List<CardHandler> cardHandlers;
+
+    @Value("${static.context.root}")
+    private String staticContextRoot;
 
     @PostMapping(value = "/prepare")
     public PreparationResponse prepare(@RequestBody PreparationRequest preparationRequest) {
@@ -52,6 +56,7 @@ public class Mpi20Controller {
         model.setViewName("threeDsMethod_2.0_form");
         model.addObject("action", termUrl);
         model.addObject("threeDSMethodData", threeDSMethodData);
+        model.addObject("staticContextRoot", staticContextRoot);
         log.info("Form threeDsMethod 2.0 show the form");
         return model;
     }

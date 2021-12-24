@@ -11,6 +11,9 @@
 </form>
 </body>
 
-<script type="text/javascript" charset="utf-8" th:src="@{/js/submit.js}" th:inline="javascript"></script>
+<script type="text/javascript"
+        charset="utf-8"
+        th:src="@{{context}/js/submit.js(context=${staticContextRoot})}"
+        th:inline="javascript"></script>
 
 </html>
