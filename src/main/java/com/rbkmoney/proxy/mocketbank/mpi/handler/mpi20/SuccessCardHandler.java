@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rbkmoney.proxy.mocketbank.mpi.configuration.properties.Mpi20Properties;
 import com.rbkmoney.proxy.mocketbank.mpi.model.Card;
 import com.rbkmoney.proxy.mocketbank.mpi.model.mpi20.*;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.CardUtils;
 import com.rbkmoney.proxy.mocketbank.mpi.utils.MpiAction;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -20,22 +21,28 @@ public class SuccessCardHandler implements CardHandler {
     private final Mpi20Properties mpi20Properties;
     private final ObjectMapper objectMapper;
 
+    private static final String UNKNOWN_ACTION = "UNKNOWN_ACTION";
+
     @Override
     public boolean isHandle(String pan) {
         return cardList.stream()
                 .anyMatch(c -> c.getPan().equals(pan)
-                        && c.getAction().equals(MpiAction.THREE_D_SECURE_2_0_SUCCESS.getAction()));
+                        && (c.getAction().equals(MpiAction.THREE_D_SECURE_2_0_SUCCESS.getAction())
+                        || c.getAction().equals(MpiAction.THREE_D_SECURE_2_0_SUCCESS_GET_ACS.getAction()))
+                );
     }
 
     @Override
     public boolean isHandle(ResultRequest request) {
-        return request.getThreeDSServerTransID().startsWith(MpiAction.THREE_D_SECURE_2_0_SUCCESS.getAction());
+        String transID = request.getThreeDSServerTransID();
+        return transID.startsWith(MpiAction.THREE_D_SECURE_2_0_SUCCESS.getAction())
+                || transID.startsWith(MpiAction.THREE_D_SECURE_2_0_SUCCESS_GET_ACS.getAction());
     }
 
     @SneakyThrows
     @Override
     public PreparationResponse prepareHandle(PreparationRequest request) {
-        String threeDSServerTransID = buildTransId();
+        String threeDSServerTransID = buildTransId(request.getPan());
         return PreparationResponse.builder()
                 .threeDSServerTransID(threeDSServerTransID)
                 .protocolVersion("2")
@@ -63,7 +70,9 @@ public class SuccessCardHandler implements CardHandler {
                 .build();
     }
 
-    private String buildTransId() {
-        return MpiAction.THREE_D_SECURE_2_0_SUCCESS.getAction() + UUID.randomUUID().toString();
+    private String buildTransId(String pan) {
+        return CardUtils.extractCardByPan(cardList, pan)
+                .map(card -> card.getAction() + UUID.randomUUID())
+                .orElseGet(() -> UNKNOWN_ACTION + UUID.randomUUID());
     }
 }

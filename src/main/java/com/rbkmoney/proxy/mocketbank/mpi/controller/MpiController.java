@@ -72,7 +72,7 @@ public class MpiController {
         if (card.isPresent()) {
             MpiAction action = MpiAction.findByValue(card.get().getAction());
             switch (action) {
-                case THREE_D_SECURE_SUCCESS -> {
+                case THREE_D_SECURE_SUCCESS, THREE_D_SECURE_SUCCESS_GET_ACS -> {
                     map.put("transactionStatus", MpiTransactionStatus.AUTHENTICATION_SUCCESSFUL);
                     map.put("eci", "1");
                     map.put("cavv", "3");

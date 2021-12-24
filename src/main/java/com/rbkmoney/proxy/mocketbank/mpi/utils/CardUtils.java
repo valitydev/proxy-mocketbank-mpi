@@ -16,7 +16,8 @@ public class CardUtils {
         if (card.isPresent()) {
             MpiAction action = MpiAction.findByValue(card.get().getAction());
             result = switch (action) {
-                case THREE_D_SECURE_FAILURE, THREE_D_SECURE_TIMEOUT, THREE_D_SECURE_SUCCESS -> true;
+                case THREE_D_SECURE_FAILURE, THREE_D_SECURE_TIMEOUT,
+                        THREE_D_SECURE_SUCCESS, THREE_D_SECURE_SUCCESS_GET_ACS -> true;
                 default -> false;
             };
         }
