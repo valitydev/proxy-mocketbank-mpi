@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: valitydev/action-deploy-docker
-          ref: v1.0.14
+          ref: v1.0.15
           path: .github/actions/action-deploy-docker
 
       - name: Run Build Java
