@@ -48,7 +48,7 @@ public class Mpi20Controller {
                 .orElseThrow();
     }
 
-    @RequestMapping(value = "/three_ds_method", method = RequestMethod.POST)
+    @RequestMapping(value = "/three_ds_method", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView threeDsMethod(@RequestParam(value = "threeDSMethodData") String threeDSMethodData,
                                       @RequestParam(value = "TermUrl") String termUrl) {
         log.info("Form threeDsMethod 2.0 input params: threeDSMethodData {}, termUrl {}", threeDSMethodData, termUrl);
