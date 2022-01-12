@@ -1,7 +1,5 @@
 # proxy-mocketbank-mpi
 
-[![Build Status](http://ci.rbkmoney.com/buildStatus/icon?job=rbkmoney_private/proxy-mocketbank-mpi/master)](http://ci.rbkmoney.com/job/rbkmoney_private/proxy-mocketbank-mpi/master)
-
 Сервис предназначен для эмулирования работы с 3DS MPI
 
 
