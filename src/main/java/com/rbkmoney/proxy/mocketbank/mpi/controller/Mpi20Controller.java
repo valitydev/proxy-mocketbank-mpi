@@ -2,6 +2,7 @@ package com.rbkmoney.proxy.mocketbank.mpi.controller;
 
 import com.rbkmoney.proxy.mocketbank.mpi.handler.mpi20.CardHandler;
 import com.rbkmoney.proxy.mocketbank.mpi.model.mpi20.*;
+import com.rbkmoney.proxy.mocketbank.mpi.utils.UrlUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +55,7 @@ public class Mpi20Controller {
         log.info("Form threeDsMethod 2.0 input params: threeDSMethodData {}, termUrl {}", threeDSMethodData, termUrl);
         ModelAndView model = new ModelAndView();
         model.setViewName("threeDsMethod_2.0_form");
-        model.addObject("action", termUrl);
+        model.addObject("action", UrlUtils.decodeUri(termUrl));
         model.addObject("threeDSMethodData", threeDSMethodData);
         addStaticContextRoot(model);
         log.info("Form threeDsMethod 2.0 show the form");
@@ -67,7 +68,7 @@ public class Mpi20Controller {
         log.info("Form ACS 2.0 input params: creq {}, termUrl {}", creq, termUrl);
         ModelAndView model = new ModelAndView();
         model.setViewName("acs_2.0_form");
-        model.addObject("action", termUrl);
+        model.addObject("action", UrlUtils.decodeUri(termUrl));
         model.addObject("pan", "XXXX XXXX XXXX XXXX");
         model.addObject("cres", creq);
         addStaticContextRoot(model);

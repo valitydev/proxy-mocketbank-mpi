@@ -104,13 +104,14 @@ public class MpiController {
     ) {
         log.info("Form ACS input params: paReq {}, MD {}, TermUrl {}", paReq, md, termUrl);
         ModelAndView model = new ModelAndView();
-        if (!termUrl.startsWith("https://")) {
-            log.warn("Form ACS, wrong termUrl {}", termUrl);
+        String decodedTermUrl = UrlUtils.decodeUri(termUrl);
+        if (!decodedTermUrl.startsWith("https://")) {
+            log.warn("Form ACS, wrong termUrl {}", decodedTermUrl);
             model.setViewName("empty");
             return model;
         }
         model.setViewName("acs_form");
-        model.addObject("action", termUrl);
+        model.addObject("action", decodedTermUrl);
         model.addObject("pan", "XXXX XXXX XXXX XXXX");
         model.addObject("PaRes", "PaRes");
         model.addObject("MD", md);
