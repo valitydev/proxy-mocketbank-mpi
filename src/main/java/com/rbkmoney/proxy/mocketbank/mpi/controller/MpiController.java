@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -104,6 +106,7 @@ public class MpiController {
     ) {
         log.info("Form ACS input params: paReq {}, MD {}, TermUrl {}", paReq, md, termUrl);
         ModelAndView model = new ModelAndView();
+        termUrl = UrlUtils.decodeUri(termUrl);
         if (!termUrl.startsWith("https://")) {
             log.warn("Form ACS, wrong termUrl {}", termUrl);
             model.setViewName("empty");
