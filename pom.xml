@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>proxy-mocketbank-mpi</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.0.1</version>
     <packaging>jar</packaging>
 
     <name>proxy-mocketbank-mpi</name>
@@ -46,12 +46,12 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>5.2</version>
+            <version>5.2</vers5.3
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
+            <version>1.18.4</v1.18.30
         </dependency>
         <!--RBK libs-->
         <dependency>
@@ -98,12 +98,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-remote-resources-plugin</artifactId>
-                <version>1.6.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.shared</groupId>
+                <version>1.6.0</ve1.7.0</groupId>
                         <artifactId>maven-filtering</artifactId>
-                        <version>3.1.1</version>
+                        <version>3.3.1</version>
                     </dependency>
                 </dependencies>
                 <configuration>
