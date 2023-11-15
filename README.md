@@ -2,11 +2,6 @@
 
 Сервис предназначен для эмулирования работы с 3DS MPI
 
-
-### Developers
-
-- [Anatoly Cherkasov](https://github.com/avcherkasov)
- 
 Отправка запросов на сервис:
 
 Вовлеченность карты:
@@ -38,7 +33,6 @@ params:
  - pan
  - paRes
 ```
-
 
 Конфигурация для docker-compose
 
