@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>proxy-mocketbank-mpi</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>proxy-mocketbank-mpi</name>
@@ -23,7 +23,7 @@
         <management.port>8023</management.port>
         <exposed.ports>${server.port} ${management.port}</exposed.ports>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <shared-resources.version>2.1.0</shared-resources.version>
+        <shared-resources.version>4.0.0</shared-resources.version>
     </properties>
 
     <dependencies>
